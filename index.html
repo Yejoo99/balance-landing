@@ -88,7 +88,9 @@ p{margin:0}
 @media (max-width:900px){.hero{padding-block:56px 64px}.hero .wrap{grid-template-columns:1fr;gap:48px}}
 
 /* report card */
-.report{background:var(--paper);color:#1C1A18;padding:28px 28px 24px;border-radius:3px;box-shadow:0 30px 60px -25px rgba(0,0,0,.6);font-size:14px;max-width:440px;justify-self:end;width:100%;position:relative}
+.report{background:var(--paper);color:#1C1A18;padding:28px 28px 24px;border-radius:3px;box-shadow:0 30px 60px -25px rgba(0,0,0,.6);font-size:14px;width:100%;position:relative}
+.report-wrap{justify-self:end;max-width:440px;width:100%}
+.report-note{margin-top:16px;font-size:12px;line-height:1.7;color:var(--band-sub)}
 .report::before{content:"";position:absolute;inset:8px;border:1px solid #E3DACB;pointer-events:none}
 .report header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;border-bottom:1px solid #1C1A18}
 .report header h3{font-size:17px}
@@ -106,8 +108,7 @@ p{margin:0}
 .bar{position:relative;height:6px;background:#E8E1D3;margin-top:8px}
 .bar i{position:absolute;left:0;top:0;bottom:0;width:68%;background:#9A7243}
 .bar u{position:absolute;top:-4px;bottom:-4px;left:50%;width:1px;background:#1C1A18}
-.report .note{font-size:11px;color:#8C8378;margin-top:14px}
-@media (max-width:900px){.report{justify-self:stretch;max-width:none}}
+@media (max-width:900px){.report-wrap{justify-self:stretch;max-width:none}}
 
 /* ---------- sections ---------- */
 section{padding-block:104px}
@@ -368,11 +369,12 @@ footer .brand b{color:var(--band-text);font-size:32px}
         <p class="affil">㈜인카금융서비스 다이렉트VFC에이전트지점 소속 본부장 <b>김인선</b></p>
         <div class="facts">
           <div><strong>34년</strong>보험·재무 컨설팅</div>
-          <div><strong>30,000+</strong>누적 보장분석 상담</div>
+          <div><strong>29,000+</strong>누적 보장분석 상담</div>
           <div><strong>0원</strong>진단·리포트 비용</div>
         </div>
       </div>
 
+      <div class="report-wrap">
       <article class="report" aria-label="보장분석 리포트 예시">
         <header>
           <div>
@@ -393,8 +395,9 @@ footer .brand b{color:var(--band-text);font-size:32px}
           <div class="bar" aria-hidden="true"><i></i><u></u></div>
           <div class="lab" style="margin-top:6px"><span>권장 상한선 10%</span><span></span></div>
         </div>
-        <p class="note">※ 이해를 돕기 위한 예시 화면이며, 실제 리포트는 고객 계약 내용을 바탕으로 작성됩니다.</p>
       </article>
+      <p class="report-note">※ 본 수치와 내용은 이해를 돕기 위한 예시 화면이며, 보험료 적정성은 소득·연령·가족구성·보장목적 및 가입계약 등을 종합하여 판단하며, 실제 리포트는 고객의 계약 내용을 바탕으로 작성됩니다.</p>
+      </div>
     </div>
   </div>
 
@@ -430,8 +433,8 @@ footer .brand b{color:var(--band-text);font-size:32px}
       <div class="c-text">
         <p class="eyebrow">Consultant</p>
         <div class="c-name"><h2>김인선</h2><span>대표 컨설턴트</span></div>
-        <blockquote><span class="motto">보험료를 내기 위해 가입하는 것이 아니라,<br>보험금을 받기 위해 가입하는 것입니다.</span>34년 동안 합리적인 보상을 설계해왔습니다.<br>보험업법과 손해사정법에 입각하여<br>제대로 보상받는 방법을 검토해드립니다.</blockquote>
-        <div class="bignum"><strong>30,000+</strong><span>누적 보장분석 상담 건수</span></div>
+        <blockquote><span class="motto">보험료를 내기 위해 가입하는 것이 아니라,<br>보험금을 받기 위해 가입하는 것입니다.</span>34년 동안 합리적인 보장을 설계해왔습니다.<br>가입한 보험의 보장내용을 꼼꼼히 살펴보고,<br>보험금을 제대로 청구할 수 있도록 안내해드립니다.</blockquote>
+        <div class="bignum"><strong>29,000+</strong><span>누적 보장분석 상담 건수</span></div>
         <div class="creds">
           <div>
             <h4>Career</h4>
@@ -513,8 +516,8 @@ footer .brand b{color:var(--band-text);font-size:32px}
         </div>
         <div class="d-item">
           <span class="d-tag">iv. Healthcare Guide</span>
-          <h3>질병별 진료·병원 안내</h3>
-          <p>건강 고민에 맞춰 필요한 진료과와 병원을 안내합니다.</p>
+          <h3>진료과·의료기관 정보 안내</h3>
+          <p>건강 고민에 맞는 진료과와 병원 선택에 참고할 수 있는 정보를 안내합니다.</p>
         </div>
       </div>
       <div class="d-closing">
@@ -533,7 +536,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
       <div class="faq">
         <details><summary>진단은 정말 무료인가요?</summary><p>네. 보험 진단과 리포트 작성은 비용이 없습니다.<br>진단 단계에서는 현재 가입한 보험을 분석하고 결과를 설명하는 데 집중합니다.<br>추가 가입이 필요한 경우에도 고객님의 상황과 필요를 먼저 확인한 후 안내드립니다.</p></details>
         <details><summary>보험증권이 없어도 진단받을 수 있나요?</summary><p>네, 가능합니다.<br>고객님의 동의하에 가입 내역을 조회하거나,<br>보험사 앱의 계약 목록을 캡처해서 보내주셔도 분석할 수 있습니다.<br>상담 신청 후 가장 편한 방법으로 안내해드립니다.</p></details>
-        <details><summary>특정 보험사 상품만 추천하시나요?</summary><p>아닙니다.<br>여러 보험사의 상품을 비교할 수 있는 법인보험대리점(GA) 소속으로,<br>필요한 경우 복수 보험사의 상품과 조건을 비교해드립니다.<br>상품을 비교할 때는 보장내용·보험료·가입조건·갱신 여부 등 주요 기준을 함께 확인합니다.</p></details>
+        <details><summary>특정 보험사 상품만 추천하시나요?</summary><p>아닙니다.<br>여러 보험사의 상품을 비교할 수 있는 법인보험대리점(GA) 소속으로,<br>필요한 경우 여러 보험사의 취급 가능한 상품과 조건을 비교해드립니다.<br>상품을 비교할 때는 보장내용·보험료·가입조건·갱신 여부 등 주요 기준을 함께 확인합니다.</p></details>
         <details><summary>기존 보험을 해지하라고 하시나요?</summary><p>해지는 가장 마지막에 검토합니다.<br>기존 보험을 해지하고 새로운 보험에 가입할 경우<br>보험료 인상, 보장 제한, 면책·감액, 가입 거절 등의 불이익이 발생할 수 있습니다.<br>따라서 기존 계약의 조건을 먼저 확인하고, 유지 → 조정 → 대체 순으로 검토합니다.</p></details>
         <details><summary>진단받으면 반드시 보험에 가입해야 하나요?</summary><p>아닙니다.<br>보험진단은 현재 가입한 보험을 이해하고 필요한 보장과 부족한 부분을 확인하는 과정입니다.<br>추가 가입이 필요하다고 판단되는 경우에도 비교·설명을 들은 후 가입 여부는 고객님이 결정합니다.</p></details>
         <details><summary>어떤 보험을 설계할 수 있나요?</summary><p>고객의 연령, 가족력, 건강상태, 소득과 필요한 보장을 종합적으로 고려해 필요한 보험을 설계합니다.<br>• 건강보험 — 암·뇌·심장 등 주요 질병 보장<br>• 종합보험 — 질병·상해·수술·입원 등 종합 보장<br>• 간병·치매보험 — 장기 간병과 치매 위험 대비<br>• 어린이·자녀보험 — 성장 과정의 질병·상해 보장<br>• 종신·사망보험 — 가족의 소득보전 및 상속·증여 재원<br>• 연금·노후보험 — 은퇴 후 생활자금 준비<br>이 외에도 필요하신 보험이 있다면 함께 설계해 드립니다.<br>필요한 보험을 먼저 정하고 상품을 찾는 것이 아니라, 필요한 보장을 먼저 분석한 후 적합한 상품을 비교합니다.</p></details>
@@ -651,7 +654,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
               <option>네이버 검색</option><option>네이버 블로그</option><option>인스타그램</option><option>스레드</option><option>페이스북</option><option>유튜브</option><option>카카오톡</option><option>지인 소개</option><option>기존 고객</option><option>기타</option>
             </select>
           </div>
-          <div class="f"><label for="memo">구체적인 상담 희망내용</label><p class="field-note" id="memoNote">※ 질병명, 치료내용, 수술·복약 등 건강정보는 절대 입력하지 마세요. 상담 시 별도로 안내드리겠습니다.</p><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요." aria-describedby="memoNote"></textarea></div>
+          <div class="f"><label for="memo">구체적인 상담 희망내용</label><p class="field-note" id="memoNote">※ 질병명, 치료내용, 수술·복약 등 건강정보는 절대 입력하지 마세요. 상담 시 별도로 안내드리겠습니다.</p><textarea id="memo" name="memo" placeholder="예) 가입한 보험이 여러 건인데 보장내용과 보험료를 점검받고 싶어요." aria-describedby="memoNote"></textarea></div>
 
           <div class="hp" aria-hidden="true"><label for="website">웹사이트</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="consent">
