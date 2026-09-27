@@ -605,6 +605,12 @@ footer .brand b{color:var(--band-text);font-size:20px}
               </div>
             </div>
           </div>
+          <div class="f"><label for="source">어떻게 알고 오셨나요? (유입경로)</label>
+            <select id="source" name="source">
+              <option value="">선택해 주세요</option>
+              <option>네이버 검색</option><option>네이버 블로그</option><option>인스타그램</option><option>유튜브</option><option>카카오톡</option><option>지인 소개</option><option>기존 고객</option><option>기타</option>
+            </select>
+          </div>
           <div class="f"><label for="memo">구체적인 상담 희망내용</label><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요."></textarea></div>
 
           <div class="consent">
@@ -632,7 +638,7 @@ footer .brand b{color:var(--band-text);font-size:20px}
         <p class="pv-label">필수항목</p>
         <ul><li>이름</li><li>연락처</li><li>상담 신청 내용</li></ul>
         <p class="pv-label">선택항목</p>
-        <ul><li>생년월일</li><li>보험료 범위</li><li>진단 희망 항목</li><li>희망 상담 방식 및 시간</li></ul>
+        <ul><li>생년월일</li><li>보험료 범위</li><li>진단 희망 항목</li><li>희망 상담 방식 및 시간</li><li>유입경로</li></ul>
         <p class="pv-mark">※ 주민등록번호, 건강정보 등 민감정보 및 고유식별정보는 상담 신청 단계에서 수집하지 않습니다. 보험 가입을 진행하는 경우 필요한 정보는 관계 법령에 따라 별도의 동의 절차를 거쳐 수집·이용합니다.</p>
       </details>
       <details>
@@ -776,7 +782,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
       ref, submittedAt: now.toISOString(), name, phone: phone.value,
       birth: birth.value, premium: form.premium.value || '모름',
       topics: [...form.querySelectorAll('input[name=topic]:checked')].map(i=>i.value==='기타' ? '기타('+etcText.value.trim()+')' : i.value).join(', '),
-      method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(),
+      method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(), source: form.source.value,
       ...utm, referrer: document.referrer || ''
     };
 
