@@ -223,6 +223,9 @@ input::placeholder,textarea::placeholder{color:#6F675D}
 .chips.gender span{display:block;text-align:center}
 #topicEtcText{margin-top:6px}
 .time-range{display:flex;align-items:center;gap:8px}
+.region-in{display:flex;gap:10px}
+.region-in select{flex:0 0 38%;min-width:0}
+.region-in input{flex:1;min-width:0}
 .time-range select{flex:1;min-width:0}
 .time-range .tilde{color:var(--band-sub);flex:none}
 .chips label{position:relative}
@@ -583,14 +586,22 @@ footer .brand b{color:var(--band-text);font-size:32px}
               </div>
             </div>
           </div>
-          <div class="f"><label for="premium">현재 월 보험료 (가구 합계)</label>
-            <select id="premium" name="premium">
-              <option value="">잘 모르겠어요</option>
-              <option>10만 원 미만</option><option>10~30만 원</option><option>30~50만 원</option><option>50~100만 원</option><option>100만 원 이상</option>
-            </select>
+          <div class="row">
+            <div class="f"><label for="sido">거주 지역 <i>*</i></label>
+              <div class="region-in">
+                <select id="sido" name="sido" aria-label="시·도" required><option value="">시·도</option><option>서울시</option><option>경기도</option><option>인천시</option><option>부산시</option><option>대구시</option><option>광주시</option><option>대전시</option><option>울산시</option><option>세종시</option><option>강원도</option><option>충청북도</option><option>충청남도</option><option>전라북도</option><option>전라남도</option><option>경상북도</option><option>경상남도</option><option>제주도</option></select>
+                <input type="text" id="region" name="region" aria-label="구·동" autocomplete="off" placeholder="예) 강남구 역삼동" maxlength="40" required>
+              </div>
+            </div>
+            <div class="f"><label for="premium">현재 월 보험료 (가구 합계)</label>
+              <select id="premium" name="premium">
+                <option value="">잘 모르겠어요</option>
+                <option>10만 원 미만</option><option>10~30만 원</option><option>30~50만 원</option><option>50~100만 원</option><option>100만 원 이상</option>
+              </select>
+            </div>
           </div>
           <div class="f">
-            <span class="lbl" id="topicLbl">진단받고 싶은 부분 (복수 선택)</span>
+            <span class="lbl" id="topicLbl">진단받고 싶은 부분 (복수 선택) <i>*</i></span>
             <div class="chips" role="group" aria-labelledby="topicLbl">
               <label><input type="checkbox" name="topic" value="보험료 절감"><span>보험료 절감</span></label>
               <label><input type="checkbox" name="topic" value="해지·유지 판단"><span>해지·유지 판단</span></label>
@@ -603,8 +614,8 @@ footer .brand b{color:var(--band-text);font-size:32px}
             <input type="text" id="topicEtcText" name="topicEtcText" placeholder="어떤 부분을 진단받고 싶으신지 적어 주세요" maxlength="100" hidden>
           </div>
           <div class="row">
-            <div class="f"><label for="method">희망 상담 방식</label>
-              <select id="method" name="method"><option>전화</option><option>카카오톡</option></select>
+            <div class="f"><label for="method">희망 상담 방식 <i>*</i></label>
+              <select id="method" name="method" required><option value="">선택해 주세요</option><option>전화</option><option>카카오톡</option></select>
             </div>
             <div class="f"><label for="timeFrom">연락 편한 시간</label>
               <div class="time-range">
@@ -784,14 +795,20 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     if(bd.length!==8 || by<1920 || bdt > new Date() || bdt.getMonth()!==bm-1 || bdt.getDate()!==bday){ err.textContent='생년월일을 1980.01.01 형식으로 입력해 주세요.'; birth.focus(); return; }
     const gender = form.querySelector('input[name=gender]:checked');
     if(!gender){ err.textContent='성별을 선택해 주세요.'; form.querySelector('input[name=gender]').focus(); return; }
+    if(!form.sido.value){ err.textContent='거주 지역의 시·도를 선택해 주세요.'; form.sido.focus(); return; }
+    const gudong = form.region.value.trim();
+    if(gudong.length < 2){ err.textContent='거주 지역을 구·동까지 입력해 주세요. 예) 강남구 역삼동'; form.region.focus(); return; }
+    const region = form.sido.value + ' ' + gudong;
+    if(!form.querySelector('input[name=topic]:checked')){ err.textContent='진단받고 싶은 부분을 하나 이상 선택해 주세요.'; form.querySelector('input[name=topic]').focus(); return; }
     if(etc.checked && !etcText.value.trim()){ err.textContent='기타를 선택하셨다면 진단받고 싶은 내용을 적어 주세요.'; etcText.focus(); return; }
+    if(!form.method.value){ err.textContent='희망 상담 방식을 선택해 주세요.'; form.method.focus(); return; }
     if(!form.agreePrivacy.checked){ err.textContent='진단 신청을 위해 개인정보 수집·이용 동의가 필요합니다.'; form.agreePrivacy.focus(); return; }
 
     const now = new Date();
     const ref = 'BD-' + String(now.getFullYear()).slice(2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(Math.floor(Math.random()*9000)+1000);
     const data = {
       ref, submittedAt: now.toISOString(), name, phone: phone.value,
-      birth: birth.value, gender: gender.value, premium: form.premium.value || '모름',
+      birth: birth.value, gender: gender.value, region, premium: form.premium.value || '모름',
       topics: [...form.querySelectorAll('input[name=topic]:checked')].map(i=>i.value==='기타' ? '기타('+etcText.value.trim()+')' : i.value).join(', '),
       method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(), source: form.source.value,
       ...utm, referrer: document.referrer || ''
