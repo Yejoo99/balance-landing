@@ -243,6 +243,7 @@ input::placeholder,textarea::placeholder{color:#6F675D}
 .consent-body p:last-child{margin-bottom:0}
 .consent-body b{color:#A79E92;font-weight:600}
 .err{color:#E09A86;font-size:13px;min-height:1em}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 form .btn{width:100%;padding:19px}
 .done{text-align:left;padding:8px 0}
 .done h3{font-size:24px;margin-block:12px}
@@ -646,6 +647,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
           </div>
           <div class="f"><label for="memo">구체적인 상담 희망내용</label><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요."></textarea></div>
 
+          <div class="hp" aria-hidden="true"><label for="website">웹사이트</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="consent">
             <label><input type="checkbox" id="agreePrivacy" name="agreePrivacy"> <span>[필수] 개인정보 수집·이용에 동의합니다.</span></label>
             <details><summary>내용 보기</summary><div class="consent-body">
@@ -787,6 +789,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
   pvDlg.addEventListener('close', ()=>document.body.classList.remove('dlg-lock'));
 
   const form = document.getElementById('applyForm');
+  const loadedAt = Date.now(); // 스팸 차단: 너무 빠른 제출 확인용
   const err = document.getElementById('err');
   const phone = document.getElementById('phone');
 
@@ -837,12 +840,13 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
       birth: birth.value, gender: gender.value, region, premium: form.premium.value || '모름',
       topics: [...form.querySelectorAll('input[name=topic]:checked')].map(i=>i.value==='기타' ? '기타('+etcText.value.trim()+')' : i.value).join(', '),
       method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(), source: form.source.value,
-      ...utm, referrer: document.referrer || ''
+      ...utm, referrer: document.referrer || '',
+      website: form.website.value, elapsed: Date.now() - loadedAt
     };
 
     const btn = form.querySelector('button[type=submit]');
     btn.disabled = true; btn.textContent = '신청 접수 중…';
-    if(FORM_ENDPOINT){
+    if(FORM_ENDPOINT && !form.website.value){
       try{
         await fetch(FORM_ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data)});
       }catch(_){
