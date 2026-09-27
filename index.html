@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>밸런스 프라이빗 보험진단설계</title>
+<meta name="description" content="가입보다 먼저, 내 보험을 제대로 진단합니다. 프라이빗 1:1 보험진단 · 개인 금융컨설팅">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap">
+<style>
+:root{
+  --ivory:#F4EFE5; --ivory-2:#EBE4D6; --paper:#FBF8F2;
+  --charcoal:#23211F; --charcoal-2:#2E2B28; --ink:#1C1A18;
+  --bronze:#9A7243; --bronze-soft:#B8925F;
+  --muted:#6E665C; --line:#D8CFBF;
+  --ok:#4F6B4A; --warn:#A0672A; --bad:#9A4234;
+
+  --bg:var(--ivory); --surface:var(--paper); --text:var(--ink); --sub:var(--muted);
+  --rule:var(--line); --accent:var(--bronze); --accent-ink:#FBF8F2;
+  --band:var(--charcoal); --band-2:var(--charcoal-2); --band-text:#EFE8DA; --band-sub:#A89F92; --band-rule:#46413B;
+
+  --serif:"Noto Serif KR","Nanum Myeongjo","Apple SD Gothic Neo",serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --latin:"Cormorant Garamond",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#1A1917; --surface:#22201D; --text:#ECE5D8; --sub:#A39A8D;
+    --rule:#3A3631; --accent:#C29A68; --accent-ink:#1A1917;
+    --band:#121110; --band-2:#1C1A18; --band-text:#EFE8DA; --band-sub:#9C9387; --band-rule:#34302B;
+    --ok:#8FAE88; --warn:#D39A5B; --bad:#D07F70;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#1A1917; --surface:#22201D; --text:#ECE5D8; --sub:#A39A8D;
+  --rule:#3A3631; --accent:#C29A68; --accent-ink:#1A1917;
+  --band:#121110; --band-2:#1C1A18; --band-text:#EFE8DA; --band-sub:#9C9387; --band-rule:#34302B;
+  --ok:#8FAE88; --warn:#D39A5B; --bad:#D07F70;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75;font-weight:400;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1120px;margin-inline:auto;padding-inline:24px}
+@media (max-width:480px){.wrap{padding-inline:18px}}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;margin:0;letter-spacing:-0.01em}
+p{margin:0}
+.eyebrow{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:500 15px/1 var(--sans);padding:17px 26px;border-radius:2px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background .2s,color .2s,border-color .2s}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:var(--bronze-soft)}
+.btn-ghost{border-color:currentColor;color:inherit;background:transparent}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn .arr{font-family:var(--latin);font-size:18px}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--band);color:var(--band-text);border-bottom:1px solid var(--band-rule)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.brand b{font-family:var(--latin);font-size:24px;font-weight:500;letter-spacing:.14em}
+.brand span{font-size:12px;color:var(--band-sub);letter-spacing:.08em}
+.nav{display:flex;gap:28px;font-size:14px}
+.nav a{text-decoration:none;color:var(--band-sub)}
+.nav a:hover{color:var(--band-text)}
+.top .btn{padding:11px 18px;font-size:14px}
+@media (max-width:880px){.nav{display:none}}
+@media (max-width:420px){.brand span{display:none}}
+
+/* ---------- hero ---------- */
+.hero{background:var(--band);color:var(--band-text);padding-block:88px 96px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:1px;background:linear-gradient(90deg,transparent,var(--bronze-soft),transparent);opacity:.5}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+.hero h1{font-size:clamp(34px,5.2vw,58px);line-height:1.28;font-weight:600;margin-block:22px 26px}
+.hero h1 em{font-style:normal;color:var(--bronze-soft)}
+.hero .lead{color:var(--band-sub);font-size:17px;max-width:30em}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px}
+.hero .facts{display:flex;flex-wrap:wrap;gap:28px;margin-top:48px;padding-top:28px;border-top:1px solid var(--band-rule);font-size:13px;color:var(--band-sub)}
+.hero .facts strong{display:block;font-family:var(--latin);font-size:30px;font-weight:500;color:var(--band-text);line-height:1.1;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.hero{padding-block:56px 64px}.hero .wrap{grid-template-columns:1fr;gap:48px}}
+
+/* report card */
+.report{background:var(--paper);color:#1C1A18;padding:28px 28px 24px;border-radius:3px;box-shadow:0 30px 60px -25px rgba(0,0,0,.6);font-size:14px;max-width:440px;justify-self:end;width:100%;position:relative}
+.report::before{content:"";position:absolute;inset:8px;border:1px solid #E3DACB;pointer-events:none}
+.report header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;border-bottom:1px solid #1C1A18}
+.report header h3{font-size:17px}
+.report header small{display:block;color:#7A7166;font-size:11px;letter-spacing:.06em;margin-top:2px}
+.stamp{font-family:var(--latin);font-style:italic;color:#9A7243;border:1px solid #9A7243;padding:2px 10px;font-size:13px;white-space:nowrap}
+.rows{list-style:none;margin:0;padding:0}
+.rows li{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:11px 0;border-bottom:1px dashed #D8CFBF}
+.rows .v{font-variant-numeric:tabular-nums;color:#5E564C;font-size:13px}
+.tag{font-size:11px;font-weight:600;padding:3px 8px;border-radius:2px;letter-spacing:.04em;min-width:40px;text-align:center}
+.t-ok{background:#E3EADF;color:#3F5A3B}.t-low{background:#F3E1DC;color:#8A3A2D}.t-dup{background:#F1E6D6;color:#8A5A22}.t-over{background:#ECE6DA;color:#5E564C}
+.ratio{margin-top:18px}
+.ratio .lab{display:flex;justify-content:space-between;font-size:12px;color:#7A7166}
+.ratio .lab b{color:#1C1A18;font-variant-numeric:tabular-nums}
+.bar{position:relative;height:6px;background:#E8E1D3;margin-top:8px}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:68%;background:#9A7243}
+.bar u{position:absolute;top:-4px;bottom:-4px;left:50%;width:1px;background:#1C1A18}
+.report .note{font-size:11px;color:#8C8378;margin-top:14px}
+@media (max-width:900px){.report{justify-self:stretch;max-width:none}}
+
+/* ---------- sections ---------- */
+section{padding-block:104px}
+@media (max-width:700px){section{padding-block:72px}}
+.sec-head{display:grid;grid-template-columns:260px 1fr;gap:48px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(26px,3.4vw,38px);line-height:1.4}
+.sec-head p{color:var(--sub);margin-top:16px;max-width:36em}
+@media (max-width:800px){.sec-head{grid-template-columns:1fr;gap:14px;margin-bottom:40px}}
+
+/* who */
+.who{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule)}
+.who li{list-style:none;display:flex;gap:18px;padding:26px 8px 26px 0;border-bottom:1px solid var(--rule);font-size:17px}
+.who li:nth-child(odd){padding-right:32px}
+.who .q{font-family:var(--latin);color:var(--accent);font-size:22px;line-height:1.3}
+.who small{display:block;color:var(--sub);font-size:14px;margin-top:4px}
+.who{padding:0;margin:0}
+@media (max-width:700px){.who{grid-template-columns:1fr}}
+
+/* process */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,1fr);counter-reset:s;position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:22px;height:1px;background:var(--rule)}
+.steps li{counter-increment:s;position:relative;padding-right:20px}
+.steps li::before{content:"0" counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--bg);border:1px solid var(--accent);color:var(--accent);font-family:var(--latin);font-size:18px;position:relative}
+.steps h3{font-size:18px;margin-block:22px 8px}
+.steps p{font-size:14px;color:var(--sub)}
+.steps .time{color:var(--accent);white-space:nowrap}
+@media (max-width:1000px){
+  .steps{grid-template-columns:1fr;gap:0}
+  .steps::before{left:22px;right:auto;top:0;bottom:0;width:1px;height:auto}
+  .steps li{display:grid;grid-template-columns:44px 1fr;column-gap:22px;padding:0 0 32px}
+  .steps li::before{grid-row:span 2}
+  .steps h3{margin-top:8px}
+}
+
+/* consultant */
+.consultant-sec{--text:var(--band-text);--sub:var(--band-sub);--rule:var(--band-rule);--accent:var(--bronze-soft);background:var(--band);color:var(--text);padding-bottom:0;overflow:hidden}
+.consultant{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:end}
+.c-text{padding-bottom:104px}
+.c-visual{position:relative;margin:0;display:flex;justify-content:center;align-self:stretch;align-items:flex-end;min-height:520px}
+.c-visual::before{content:"";position:absolute;left:8%;right:8%;top:6%;bottom:0;border:1px solid var(--band-rule);border-bottom:0;background:linear-gradient(180deg,var(--band-2),transparent 85%)}
+.c-visual::after{content:"";position:absolute;left:50%;top:18%;width:90%;aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(circle,rgba(184,146,95,.22),transparent 62%);pointer-events:none}
+.c-visual img{position:relative;z-index:1;display:block;width:min(100%,360px);height:auto;filter:saturate(.85) contrast(1.03);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 99%);mask-image:linear-gradient(180deg,#000 72%,transparent 99%)}
+.c-visual figcaption{position:absolute;z-index:2;left:8%;bottom:-3%;padding:14px 16px;font-family:var(--latin);font-size:19px;letter-spacing:.2em;color:var(--band-sub)}
+@media (max-width:900px){
+  .consultant{grid-template-columns:1fr;gap:0}
+  .c-visual{min-height:0;order:-1;margin-inline:auto;width:100%;max-width:340px}
+  .c-visual img{width:78%}
+  .c-text{padding-block:40px 72px}
+}
+.c-name{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-block:14px 28px}
+.c-name h2{font-size:36px}
+.c-name span{color:var(--sub);font-size:15px}
+blockquote{margin:0 0 36px;padding:0 0 0 24px;border-left:2px solid var(--accent);font-family:var(--serif);font-size:20px;line-height:1.7}
+blockquote .motto{display:block;margin-bottom:14px;font-size:1.12em;font-weight:600;color:var(--accent)}
+.creds{display:grid;grid-template-columns:1.25fr 1fr;gap:28px 40px;border-top:1px solid var(--rule);padding-top:28px}
+.creds h4{margin:0 0 10px;font-size:12px;font-weight:500;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+.creds ul{margin:0;padding:0;list-style:none;font-size:15px}
+.creds li{padding:3px 0}
+.creds li{display:flex;gap:14px}
+.creds li b{font-weight:500;font-variant-numeric:tabular-nums;flex:none;min-width:5.6em;color:var(--sub)}
+.creds .span2{grid-column:1/-1}
+.bignum{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:28px}
+.bignum strong{font-family:var(--latin);font-size:52px;font-weight:500;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.bignum span{color:var(--sub);font-size:15px}
+@media (max-width:560px){.creds{grid-template-columns:1fr}}
+
+/* faq */
+.design-sec{background:var(--surface);border-top:1px solid var(--rule);padding-bottom:48px}
+.d-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.d-item{background:var(--surface);padding:36px 34px}
+.d-tag{display:block;font-family:var(--latin);font-style:italic;font-size:15px;letter-spacing:.04em;color:var(--accent);margin-bottom:14px}
+.d-item h3{font-size:20px;margin-bottom:10px}
+.d-item p{color:var(--sub);font-size:15px}
+@media (max-width:700px){.d-grid{grid-template-columns:1fr}.d-item{padding:30px 26px}}
+.d-closing{margin-top:48px;padding-top:36px;border-top:1px solid var(--rule);text-align:center}
+.d-closing p{font-size:19px;line-height:1.85;color:var(--text);max-width:36em;margin:0 auto}
+.d-closing strong{color:var(--accent);font-weight:600}
+
+.faq-sec{background:var(--surface);border-top:1px solid var(--rule)}
+.faq{border-top:1px solid var(--text)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{list-style:none;cursor:pointer;padding:24px 44px 24px 0;font-family:var(--serif);font-size:18px;font-weight:600;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:6px;top:18px;font-family:var(--latin);font-size:28px;color:var(--accent);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 26px;color:var(--sub);max-width:46em}
+
+/* apply */
+.apply-sec{background:var(--band);color:var(--band-text)}
+.apply{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px}
+.apply-intro h2{font-size:clamp(28px,3.6vw,40px);line-height:1.4;margin-block:18px 20px;color:var(--bronze-soft)}
+.apply-intro p{color:var(--band-sub)}
+.flow-line{font-family:var(--sans);font-size:19px;letter-spacing:.03em;color:var(--bronze-soft);margin-block:22px}
+.kakao-fab{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;flex:none;background:#FEE500;color:#391B1B;border-radius:14px;text-decoration:none}
+.kakao-fab svg{width:24px;height:24px}
+.top-cta{display:flex;align-items:center;gap:10px}
+.kakao-sq{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;flex:none;background:#FEE500;color:#391B1B;border-radius:9px;text-decoration:none}
+.kakao-sq:hover{background:#F5D800}
+.kakao-sq svg{width:21px;height:21px}
+@media (max-width:700px){.kakao-sq{display:none}}
+@media (max-width:900px){.apply{grid-template-columns:1fr;gap:48px}}
+
+form{display:grid;gap:22px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+.f{display:grid;gap:8px}
+.f > label,.f > .lbl{font-size:13px;color:var(--band-sub);letter-spacing:.02em}
+.f > label i,.f > .lbl i{color:var(--bronze-soft);font-style:normal}
+input[type=text],input[type=tel],select,textarea{width:100%;font:400 15px/1.5 var(--sans);color:var(--band-text);background:transparent;border:0;border-bottom:1px solid var(--band-rule);padding:10px 2px;border-radius:0;color-scheme:dark}
+select option{background:#23211F;color:#EFE8DA}
+textarea{resize:vertical;min-height:76px}
+input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:var(--bronze-soft)}
+input::placeholder,textarea::placeholder{color:#6F675D}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+#topicEtcText{margin-top:6px}
+.time-range{display:flex;align-items:center;gap:8px}
+.time-range select{flex:1;min-width:0}
+.time-range .tilde{color:var(--band-sub);flex:none}
+.chips label{position:relative}
+.chips input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chips span{display:inline-block;padding:8px 14px;border:1px solid var(--band-rule);font-size:14px;border-radius:2px;color:var(--band-sub);transition:all .15s}
+.chips input:checked + span{border-color:var(--bronze-soft);color:var(--band-text);background:rgba(184,146,95,.14)}
+.chips input:focus-visible + span{outline:2px solid var(--bronze-soft);outline-offset:2px}
+.consent{display:grid;gap:10px;padding-top:6px;border-top:1px solid var(--band-rule)}
+.consent label{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--band-sub);line-height:1.6}
+.consent input{accent-color:#B8925F;margin-top:4px;flex:none}
+.consent details{font-size:12px;color:#8A8277;margin-left:26px}
+.consent details summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.consent details div{padding-top:8px;line-height:1.7}
+.err{color:#E09A86;font-size:13px;min-height:1em}
+form .btn{width:100%;padding:19px}
+.done{text-align:left;padding:8px 0}
+.done h3{font-size:24px;margin-block:12px}
+.done p{color:var(--band-sub)}
+.done .ref{margin-top:24px;padding:16px 18px;border:1px solid var(--band-rule);font-size:14px;display:flex;justify-content:space-between;gap:12px}
+.done .ref b{font-family:var(--latin);font-size:20px;letter-spacing:.08em;font-weight:500}
+
+.apply-cta{align-self:center;background:var(--band-2);border:1px solid var(--band-rule);padding:44px 40px;display:grid;gap:16px;justify-items:start}
+.apply-cta h3{font-size:26px;line-height:1.4}
+.apply-cta p:not(.eyebrow){color:var(--band-sub);margin-bottom:12px}
+.apply-cta .eyebrow{color:var(--bronze-soft)}
+@media (max-width:520px){.apply-cta{padding:32px 22px}.apply-cta .btn{width:100%}}
+
+/* dialog */
+dialog{border:0;padding:0;background:var(--band);color:var(--band-text);width:min(640px,calc(100% - 32px));max-height:calc(100dvh - 48px);border-radius:3px;box-shadow:0 40px 80px -20px rgba(0,0,0,.6);overflow:auto;overscroll-behavior:contain}
+dialog::backdrop{background:rgba(18,17,16,.72);backdrop-filter:blur(3px)}
+dialog[open]{animation:dlgIn .28s ease-out}
+@keyframes dlgIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.dlg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:30px 36px 0}
+.dlg-head .eyebrow{color:var(--bronze-soft)}
+.dlg-head h2{font-size:24px;margin-top:6px}
+.x{background:none;border:1px solid var(--band-rule);color:var(--band-text);width:40px;height:40px;flex:none;font-size:22px;line-height:1;cursor:pointer;border-radius:2px}
+.x:hover{border-color:var(--bronze-soft);color:var(--bronze-soft)}
+dialog form,.dlg-content{padding:26px 36px 36px}
+dialog .done{padding:26px 36px 40px}
+body.dlg-lock{overflow:hidden}
+@media (max-width:600px){
+  dialog{width:100%;max-width:100%;max-height:100dvh;height:100dvh;margin:0;border-radius:0}
+  dialog[open]{animation-name:sheetIn}
+  .dlg-head{position:sticky;top:0;z-index:1;background:var(--band);padding:calc(18px + env(safe-area-inset-top,0px)) 18px 16px;border-bottom:1px solid var(--band-rule)}
+  .dlg-head h2{font-size:20px}
+  dialog form,.dlg-content{padding:22px 18px calc(28px + env(safe-area-inset-bottom,0px))}
+  dialog .done{padding:26px 18px 40px}
+}
+@keyframes sheetIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+/* privacy dialog */
+.pv-wrap{font-size:14px}
+.pv-lead{color:var(--band-sub);margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--band-rule)}
+.pv{border-top:1px solid var(--band-rule)}
+.pv details{border-bottom:1px solid var(--band-rule)}
+.pv summary{list-style:none;cursor:pointer;padding:16px 36px 16px 0;font-size:15px;color:var(--band-text);position:relative}
+.pv summary::-webkit-details-marker{display:none}
+.pv summary::after{content:"+";position:absolute;right:2px;top:11px;font-family:var(--latin);font-size:22px;color:var(--bronze-soft);transition:transform .2s}
+.pv details[open] summary::after{transform:rotate(45deg)}
+.pv details p,.pv details ul{padding:0 0 14px;color:var(--band-sub);line-height:1.8}
+.pv details > p:last-child,.pv details > ul:last-child{padding-bottom:20px}
+.pv details p b{color:var(--band-text);font-weight:500}
+.pv details .pv-label{color:var(--band-text);font-weight:500;padding-bottom:6px}
+.pv details .pv-mark{color:#8A8277;font-size:12.5px}
+.pv details ul{list-style:none;margin:0;padding-left:0;display:grid;gap:4px}
+.pv details ul li{padding-left:15px;position:relative;padding-bottom:0}
+.pv details ul li::before{content:"•";position:absolute;left:0;color:var(--bronze-soft)}
+.pv-no{display:inline-block;min-width:20px;color:var(--bronze-soft);font-family:var(--latin);font-style:italic}
+.pv-foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--band-rule);font-size:12px;color:#8A8277;line-height:1.9}
+.pv-foot b{display:block;color:#A79E92;font-weight:600;margin-bottom:4px}
+
+
+/* footer */
+footer{background:var(--band);color:var(--band-sub);border-top:1px solid var(--band-rule);padding-block:48px 120px;font-size:12px;line-height:1.8}
+footer .wrap{display:grid;gap:22px}
+footer .brand b{color:var(--band-text);font-size:20px}
+.legal{border:1px solid var(--band-rule);padding:16px 18px;color:#B2A999}
+.legal b{display:inline-block;margin-bottom:6px;color:#C7BEB2;font-weight:600}
+.biz{display:flex;flex-wrap:wrap;gap:4px 18px}
+.ph{color:var(--bronze-soft)}
+.foot-links{margin:14px 0 0}
+.footer-link{text-decoration:underline;text-underline-offset:3px}
+.footer-link:hover{color:var(--band-text)}
+
+/* mobile CTA */
+.mcta{display:none}
+@media (max-width:700px){
+  .mcta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--band);border-top:1px solid var(--band-rule)}
+  .mcta .btn{flex:1;padding:15px}
+  .top .btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>BALANCE</b><span>프라이빗 보험진단설계</span></a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#consultant">컨설턴트</a>
+      <a href="#process">진단 과정</a>
+      <a href="#design">설계 소개</a>
+      <a href="#faq">자주 묻는 질문</a>
+    </nav>
+    <div class="top-cta">
+      <a class="kakao-sq" href="https://open.kakao.com/o/saEHqCPi" target="_blank" rel="noopener" aria-label="카카오톡 상담">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.86 5.18 4.66 6.58-.2.75-.73 2.7-.84 3.12-.13.52.19.51.4.37.16-.11 2.6-1.77 3.66-2.5.68.1 1.38.15 2.12.15 5.52 0 10-3.48 10-7.72S17.52 3 12 3z"/></svg>
+      </a>
+      <a class="btn btn-primary" href="#apply" data-open-apply data-cta="header">무료진단 신청</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Private Insurance Diagnosis</p>
+        <h1>가입보다 먼저,<br>내 보험을 <em>제대로 진단</em>합니다.</h1>
+        <p class="lead">어떤 상품을 권하기 전에, 가입한 보험부터 객관적으로 분석합니다. 보장의 빈틈과 중복, 소득 대비 총 내야 할 보험료까지 한 장의 리포트로 정리합니다.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#apply" data-open-apply data-cta="hero">내 보험 무료진단 신청 <span class="arr">→</span></a>
+          <a class="btn btn-ghost" href="#process">진단 과정 보기</a>
+        </div>
+        <div class="facts">
+          <div><strong>34년</strong>보험·재무 컨설팅</div>
+          <div><strong>30,000+</strong>누적 보장분석 상담</div>
+          <div><strong>0원</strong>진단·리포트 비용</div>
+        </div>
+      </div>
+
+      <article class="report" aria-label="보장분석 리포트 예시">
+        <header>
+          <div>
+            <h3>보장분석 리포트</h3>
+            <small>예시 · 40대 직장인 · 보유계약 6건</small>
+          </div>
+          <span class="stamp">Sample</span>
+        </header>
+        <ul class="rows">
+          <li><span>암 진단비</span><span class="v">3,000만</span><span class="tag t-ok">적정</span></li>
+          <li><span>뇌혈관질환 진단비</span><span class="v">500만</span><span class="tag t-low">부족</span></li>
+          <li><span>허혈성심장질환</span><span class="v">미가입</span><span class="tag t-low">공백</span></li>
+          <li><span>실손의료비</span><span class="v">2건</span><span class="tag t-dup">중복</span></li>
+          <li><span>일반사망</span><span class="v">2억</span><span class="tag t-over">과다</span></li>
+        </ul>
+        <div class="ratio">
+          <div class="lab"><span>월 소득 대비 보험료</span><b>13.6%</b></div>
+          <div class="bar" aria-hidden="true"><i></i><u></u></div>
+          <div class="lab" style="margin-top:6px"><span>권장 상한선 10%</span><span></span></div>
+        </div>
+        <p class="note">※ 이해를 돕기 위한 예시 화면이며, 실제 리포트는 고객 계약 내용을 바탕으로 작성됩니다.</p>
+      </article>
+    </div>
+  </div>
+
+  <!-- WHO -->
+  <section id="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">For You</p>
+        <div>
+          <h2>가입보다 진단이 먼저인 이유</h2>
+          <p>보험은 많을수록 좋은 게 아니라, 내 상황에 맞아야 합니다. 아래 중 하나라도 해당된다면 새 보험보다 진단이 먼저입니다.</p>
+        </div>
+      </div>
+      <ul class="who">
+        <li><span class="q">—</span><div>매달 보험료는 나가는데 무엇을, 얼마나 보장받는지 잘 모릅니다<small>가입 당시 설명만 듣고 증권을 다시 본 적이 없는 경우</small></div></li>
+        <li><span class="q">—</span><div>지인 권유로 가입하다 보니 계약이 여러 개입니다<small>같은 보장이 겹치거나, 정작 필요한 보장이 빠져 있을 수 있습니다</small></div></li>
+        <li><span class="q">—</span><div>갱신 보험료가 부담됩니다<small>갱신형·비갱신형 구조와 향후 인상 폭을 함께 점검합니다</small></div></li>
+        <li><span class="q">—</span><div>결혼·출산·이직 등 생활에 변화가 생겼습니다<small>가족 구성과 소득이 바뀌면 필요한 보장 금액도 달라집니다</small></div></li>
+        <li><span class="q">—</span><div>해지와 유지 사이에서 판단이 서지 않습니다<small>해지환급금과 재가입 조건을 비교한 뒤 결정해도 늦지 않습니다</small></div></li>
+        <li><span class="q">—</span><div>부모님 보험도 한 번 정리해 드리고 싶습니다<small>고연령 가입자의 유병자 보험·간병 보장 점검도 함께합니다</small></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <!-- CONSULTANT -->
+  <section id="consultant" class="consultant-sec">
+    <div class="wrap consultant">
+      <figure class="c-visual">
+        <img src="profile.webp?v=6" alt="김인선 대표 컨설턴트" width="608" height="798" loading="lazy">
+        <figcaption>KIM IN SUN</figcaption>
+      </figure>
+      <div class="c-text">
+        <p class="eyebrow">Consultant</p>
+        <div class="c-name"><h2>김인선</h2><span>대표 컨설턴트</span></div>
+        <blockquote><span class="motto">보험료를 내기 위해 가입하는 것이 아니라,<br>보험금을 받기 위해 가입하는 것입니다.</span>34년 동안 합리적인 보상을 설계해왔습니다.<br>보험업법과 손해사정법에 입각하여<br>제대로 보상받는 방법을 검토해드립니다.</blockquote>
+        <div class="bignum"><strong>30,000+</strong><span>누적 보장분석 상담 건수</span></div>
+        <div class="creds">
+          <div>
+            <h4>Career</h4>
+            <ul>
+              <li><b>34년차</b>보험·재무 컨설팅 및 MDRT 경력</li>
+              <li><b>1993–2006</b>삼성생명 FC 및 지점장</li>
+              <li><b>2007–2015</b>법인 대리점 대표</li>
+              <li><b>2015–2025</b>메트라이프생명</li>
+              <li><b>現</b>(주)인카금융서비스 본부장</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Speciality</h4>
+            <ul>
+              <li>생애주기별 보장분석 및 보험 리모델링</li>
+              <li>자산가 상속·증여 설계 및 가업승계플랜</li>
+              <li>법인 주요이슈(가지급금, 차명주식 등) 컨설팅</li>
+              <li>병의원 종합상담</li>
+            </ul>
+          </div>
+          <div class="span2">
+            <h4>Consulting</h4>
+            <ul>
+              <li>전화 · 카톡 · 대면 상담</li>
+              <li>평일 10:00–20:00 / 토 예약제</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Process</p>
+        <div>
+          <h2>신청부터 정기 점검까지, 여섯 단계</h2>
+          <p>모든 과정은 예약제로 진행됩니다.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><h3>진단 신청</h3><p>간단한 정보와 편한 상담 시간을 남겨 주세요. <span class="time">(1분)</span></p></li>
+        <li><h3>계약 정보 확인</h3><p>보험증권 또는 동의 기반 계약 조회로 보유 계약을 정리합니다. <span class="time">(1~2일)</span></p></li>
+        <li><h3>보장 분석</h3><p>보장 금액·중복·공백·갱신 구조·소득 대비 보험료를 분석합니다. <span class="time">(2~3일)</span></p></li>
+        <li><h3>1:1 리포트 설명</h3><p>전화·카톡·대면 중 편한 방식으로 결과를 설명드립니다.</p></li>
+        <li><h3>합리적 솔루션 제공</h3><p>리포트를 바탕으로 34개 보험사 상품을 비교분석해 유지·감액·보완·신규 가입 중 가장 합리적인 방안을 제안합니다.</p></li>
+        <li><h3>정기 점검</h3><p>생활 변화나 갱신 시점에 맞춰 연 1회 다시 점검합니다. <span class="time">(연 1회)</span></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- DESIGN -->
+  <section id="design" class="design-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Design</p>
+        <div>
+          <h2>진단 이후, 필요한 설계까지</h2>
+          <p>보험설계는 모두 같을 수 없습니다.<br>보험료보다 중요한 건, 필요한 순간의 보장입니다.<br>가족력과 질병위험을 반영한 맞춤 보장설계를 책임집니다.</p>
+        </div>
+      </div>
+      <div class="d-grid">
+        <div class="d-item">
+          <span class="d-tag">i. Life Cycle</span>
+          <h3>생애주기별 보장설계</h3>
+          <p>결혼·출산·이직·은퇴 등 삶의 변화에 맞춰 보장을 다시 설계합니다.</p>
+        </div>
+        <div class="d-item">
+          <span class="d-tag">ii. New Policy</span>
+          <h3>신규보험 설계</h3>
+          <p>필요한 보장을 확인하고 34개 보험사의 상품을 비교해 맞춤 설계합니다.</p>
+        </div>
+        <div class="d-item">
+          <span class="d-tag">iii. Estate &amp; Tax</span>
+          <h3>상속·증여 및 세무 컨설팅</h3>
+          <p>상속·증여 재원 마련을 위한 보험 활용과 관련 세무 이슈를 함께 검토합니다.</p>
+        </div>
+        <div class="d-item">
+          <span class="d-tag">iv. Healthcare Guide</span>
+          <h3>질병별 진료·병원 안내</h3>
+          <p>건강 고민에 맞춰 필요한 진료과와 병원을 안내합니다.</p>
+        </div>
+      </div>
+      <div class="d-closing">
+        <p><strong>보험만 관리하지 않습니다.</strong><br>건강관리부터 진료 안내, 보험금 청구와 보상까지.<br>고객의 건강과 보험을 함께 관리하는 통합 헬스케어 서비스</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq-sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">FAQ</p>
+        <div><h2>자주 묻는 질문</h2></div>
+      </div>
+      <div class="faq">
+        <details><summary>진단은 정말 무료인가요?</summary><p>네. 보험 진단과 리포트 작성은 비용이 없습니다.<br>진단 단계에서는 현재 가입한 보험을 분석하고 결과를 설명하는 데 집중합니다.<br>추가 가입이 필요한 경우에도 고객님의 상황과 필요를 먼저 확인한 후 안내드립니다.</p></details>
+        <details><summary>보험증권이 없어도 진단받을 수 있나요?</summary><p>네, 가능합니다.<br>고객님의 동의하에 가입 내역을 조회하거나,<br>보험사 앱의 계약 목록을 캡처해서 보내주셔도 분석할 수 있습니다.<br>상담 신청 후 가장 편한 방법으로 안내해드립니다.</p></details>
+        <details><summary>특정 보험사 상품만 추천하시나요?</summary><p>아닙니다.<br>여러 보험사의 상품을 비교할 수 있는 법인보험대리점(GA) 소속으로, 필요한 경우 복수 보험사의 상품과 조건을 비교해드립니다.<br>상품을 비교할 때는 보장내용·보험료·가입조건·갱신 여부 등 주요 기준을 함께 확인합니다.</p></details>
+        <details><summary>기존 보험을 해지하라고 하시나요?</summary><p>해지는 가장 마지막에 검토합니다.<br>기존 보험을 해지하고 새로운 보험에 가입할 경우 보험료 인상, 보장 제한, 면책·감액, 가입 거절 등의 불이익이 발생할 수 있습니다.<br>따라서 기존 계약의 조건을 먼저 확인하고, 유지 → 조정 → 대체 순으로 검토합니다.</p></details>
+        <details><summary>진단받으면 반드시 보험에 가입해야 하나요?</summary><p>아닙니다.<br>보험진단은 현재 가입한 보험을 이해하고 필요한 보장과 부족한 부분을 확인하는 과정입니다.<br>추가 가입이 필요하다고 판단되는 경우에도 비교·설명을 들은 후 가입 여부는 고객님이 결정합니다.</p></details>
+        <details><summary>어떤 보험을 설계할 수 있나요?</summary><p>고객의 연령, 가족력, 건강상태, 소득과 필요한 보장을 종합적으로 고려해 필요한 보험을 설계합니다.<br>• 건강보험 — 암·뇌·심장 등 주요 질병 보장<br>• 종합보험 — 질병·상해·수술·입원 등 종합 보장<br>• 간병·치매보험 — 장기 간병과 치매 위험 대비<br>• 어린이·자녀보험 — 성장 과정의 질병·상해 보장<br>• 종신·사망보험 — 가족의 소득보전 및 상속·증여 재원<br>• 연금·노후보험 — 은퇴 후 생활자금 준비<br>이 외에도 필요하신 보험이 있다면 함께 설계해 드립니다.<br>필요한 보험을 먼저 정하고 상품을 찾는 것이 아니라, 필요한 보장을 먼저 분석한 후 적합한 상품을 비교합니다.</p></details>
+        <details><summary>가족 보험도 함께 진단받을 수 있나요?</summary><p>네.<br>본인뿐 아니라 배우자·자녀·부모님의 보험까지 함께 분석할 수 있습니다.<br>가족 구성원별 보장뿐 아니라 가구 전체의 보험료 부담과 보장 균형을 함께 확인할 수 있습니다.</p></details>
+        <details><summary>상속·증여를 위한 상담도 가능한가요?</summary><p>네.<br>상속·증여 재원 마련과 관련된 보험 활용을 상담할 수 있습니다.<br>세무·법률 등 전문적인 검토가 필요한 경우에는 관련 전문가와 연계하여 상담을 진행합니다.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply" class="apply-sec">
+    <div class="wrap apply">
+      <div class="apply-intro">
+        <p class="eyebrow">Free Diagnosis</p>
+        <h2>보험은 가입하는 순간보다<br>필요할 때 제대로 작동하는지가 중요합니다</h2>
+        <p class="flow-line">진단 → 설계 → 가입 → 보상 → 관리</p>
+        <p>처음부터 끝까지 함께 관리하겠습니다.<br>상담 일정은 편하신 시간으로 맞춰 드립니다.</p>
+      </div>
+
+      <div class="apply-cta">
+        <p class="eyebrow">Apply</p>
+        <h3>1분이면 신청이 끝납니다</h3>
+        <p>이름과 연락처, 편한 상담 시간만 남겨 주세요. 보험증권은 나중에 준비하셔도 됩니다.</p>
+        <button class="btn btn-primary" type="button" data-open-apply data-cta="apply-section">내 보험 무료진단 신청 <span class="arr">→</span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><b>BALANCE</b><span>프라이빗 보험진단설계</span></a>
+    <div class="biz">
+      <span>소속 (주)인카금융서비스 비엡시다이렉트지점</span>
+      <span>대표 컨설턴트 김인선</span>
+      <span>주소 서울시 강남구 테헤란로 323, 휘닉스오피스텔 603호</span>
+      <span>카카오톡 상담 <a class="ph footer-link" href="https://open.kakao.com/o/saEHqCPi" target="_blank" rel="noopener">바로가기</a></span>
+    </div>
+    <div class="legal">
+      <b>보험 가입 유의사항</b><br>
+      기존 보험계약을 해지하고 새로운 보험에 가입할 경우, 질병·연령 등의 사유로 가입이 거절되거나 보험료가 인상될 수 있으며 보장내용이 달라질 수 있습니다.<br>
+      보험계약 체결 전 상품설명서와 약관을 반드시 확인하시기 바랍니다.<br>
+      보험계약은 예금자보호법에 따라 보호되며, 보호한도는 1인당 최고 1억원입니다. 보호대상 금융상품 및 구체적인 보호범위는 보험회사 및 예금보험공사의 기준에 따릅니다.<br>
+      ※ 본 페이지의 보험상품 및 보장내용은 상담 시 확인되는 상품설명서와 약관을 기준으로 합니다.
+    </div>
+    <p class="foot-links"><a class="footer-link" href="#" data-open-privacy>개인정보처리방침</a></p>
+    <p>© BALANCE Private Insurance Diagnosis Center</p>
+  </div>
+</footer>
+
+<dialog id="applyDialog" aria-labelledby="dlgTitle">
+  <div id="formbox">
+        <div class="dlg-head"><div><p class="eyebrow">Free Diagnosis</p><h2 id="dlgTitle">내 보험 무료진단 신청</h2></div><button class="x" type="button" data-close aria-label="닫기">×</button></div>
+        <form id="applyForm" novalidate>
+          <div class="row">
+            <div class="f"><label for="name">이름 <i>*</i></label><input type="text" id="name" name="name" autocomplete="name" placeholder="홍길동" required></div>
+            <div class="f"><label for="phone">연락처 <i>*</i></label><input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="numeric" placeholder="010-1234-5678" required></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="birth">생년월일 <i>*</i></label><input type="text" id="birth" name="birth" autocomplete="bday" inputmode="numeric" placeholder="1980.01.01" maxlength="10" required></div>
+            <div class="f"><label for="premium">현재 월 보험료 (가구 합계)</label>
+              <select id="premium" name="premium">
+                <option value="">잘 모르겠어요</option>
+                <option>10만 원 미만</option><option>10~30만 원</option><option>30~50만 원</option><option>50~100만 원</option><option>100만 원 이상</option>
+              </select>
+            </div>
+          </div>
+          <div class="f">
+            <span class="lbl" id="topicLbl">진단받고 싶은 부분 (복수 선택)</span>
+            <div class="chips" role="group" aria-labelledby="topicLbl">
+              <label><input type="checkbox" name="topic" value="보험료 절감"><span>보험료 절감</span></label>
+              <label><input type="checkbox" name="topic" value="해지·유지 판단"><span>해지·유지 판단</span></label>
+              <label><input type="checkbox" name="topic" value="갱신 보험료"><span>갱신 보험료</span></label>
+              <label><input type="checkbox" name="topic" value="실손 중복"><span>실손 중복</span></label>
+              <label><input type="checkbox" name="topic" value="신규보험 설계"><span>신규보험 설계</span></label>
+              <label><input type="checkbox" name="topic" value="상속·증여 및 세무 컨설팅"><span>상속·증여 및 세무 컨설팅</span></label>
+              <label><input type="checkbox" name="topic" value="기타" id="topicEtc"><span>기타</span></label>
+            </div>
+            <input type="text" id="topicEtcText" name="topicEtcText" placeholder="어떤 부분을 진단받고 싶으신지 적어 주세요" maxlength="100" hidden>
+          </div>
+          <div class="row">
+            <div class="f"><label for="method">희망 상담 방식</label>
+              <select id="method" name="method"><option>전화</option><option>카카오톡</option></select>
+            </div>
+            <div class="f"><label for="timeFrom">연락 편한 시간</label>
+              <div class="time-range">
+                <select id="timeFrom" name="timeFrom" aria-label="연락 가능 시작 시간"><option>09:00</option><option selected>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option><option>20:00</option></select>
+                <span class="tilde">~</span>
+                <select id="timeTo" name="timeTo" aria-label="연락 가능 종료 시간"><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option selected>18:00</option><option>19:00</option><option>20:00</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="f"><label for="memo">구체적인 상담 희망내용</label><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요."></textarea></div>
+
+          <div class="consent">
+            <label><input type="checkbox" id="agreePrivacy" name="agreePrivacy"> <span>[필수] 개인정보 수집·이용에 동의합니다.</span></label>
+            <details><summary>내용 보기</summary><div>수집 항목: 이름, 연락처, 생년월일, 보험료 범위, 상담 희망 내용<br>수집 목적: 보험 진단 상담 안내 및 일정 조율<br>보유 기간: 상담 종료 후 1년 (요청 시 즉시 파기)<br>동의를 거부하실 수 있으나, 거부 시 진단 신청이 제한됩니다.</div></details>
+          </div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-primary" type="submit" data-cta="form">내 보험 무료진단 신청 <span class="arr">→</span></button>
+        </form>
+      </div>
+</dialog>
+
+<dialog id="privacyDialog" aria-labelledby="pvTitle">
+  <div class="dlg-head"><div><p class="eyebrow">Policy</p><h2 id="pvTitle">개인정보 처리방침</h2></div><button class="x" type="button" data-close aria-label="닫기">×</button></div>
+  <div class="dlg-content pv-wrap">
+    <p class="pv-lead">밸런스 보험진단설계(김인선, (주)인카금융서비스 비엡시다이렉트지점)는 고객님의 개인정보를 소중하게 보호하며, 「개인정보 보호법」 등 관련 법령을 준수합니다.</p>
+
+    <div class="pv">
+      <details>
+        <summary><span class="pv-no">1</span>개인정보의 처리 목적</summary>
+        <p>무료 보험진단 및 상담 신청을 접수하고, 상담 일정 안내 및 상담 진행을 위해 개인정보를 처리합니다.<br>수집한 개인정보는 위 목적 이외의 용도로 이용하지 않습니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">2</span>수집하는 개인정보</summary>
+        <p class="pv-label">필수항목</p>
+        <ul><li>이름</li><li>연락처</li><li>상담 신청 내용</li></ul>
+        <p class="pv-label">선택항목</p>
+        <ul><li>생년월일</li><li>보험료 범위</li><li>진단 희망 항목</li><li>희망 상담 방식 및 시간</li></ul>
+        <p class="pv-mark">※ 주민등록번호, 건강정보 등 민감정보 및 고유식별정보는 상담 신청 단계에서 수집하지 않습니다. 보험 가입을 진행하는 경우 필요한 정보는 관계 법령에 따라 별도의 동의 절차를 거쳐 수집·이용합니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">3</span>개인정보의 보유 및 이용기간</summary>
+        <p>상담 신청일로부터 1년간 보관 후 파기합니다.<br>다만, 관계 법령에 따라 별도의 보존이 필요한 경우에는 해당 법령에서 정한 기간 동안 보관합니다.<br>상담 신청자가 삭제를 요청하는 경우 법령상 보존 의무가 없는 개인정보는 지체 없이 파기합니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">4</span>개인정보의 제3자 제공</summary>
+        <p>원칙적으로 고객님의 개인정보를 제3자에게 제공하지 않습니다.<br>다만 법령에 특별한 규정이 있거나, 고객님의 별도 동의를 받은 경우에는 예외적으로 제공할 수 있습니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">5</span>개인정보 처리의 위탁</summary>
+        <p>현재 별도의 외부 업체에 개인정보 처리를 위탁하지 않습니다.<br>향후 개인정보 처리업무를 외부에 위탁하는 경우 수탁자와 위탁업무의 내용을 본 처리방침을 통해 안내하겠습니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">6</span>개인정보의 국외 이전</summary>
+        <p>현재 고객님의 개인정보를 국외로 이전하지 않습니다.<br>향후 국외 이전이 발생하는 경우 관련 법령에 따라 필요한 사항을 사전에 안내하겠습니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">7</span>정보주체의 권리</summary>
+        <p>고객님은 언제든지 개인정보의 열람, 정정·삭제, 처리정지 등을 요청할 수 있습니다.<br>요청은 아래 문의처를 통해 접수할 수 있으며, 본인 확인 후 관련 법령에 따라 처리합니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">8</span>개인정보의 파기</summary>
+        <p>보유기간이 지나거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다.<br>전자파일은 복구할 수 없는 방법으로 삭제하며, 종이문서는 분쇄 또는 소각합니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">9</span>개인정보의 안전성 확보조치</summary>
+        <p class="pv-label">개인정보 보호를 위해 다음과 같은 조치를 취합니다.</p>
+        <ul><li>개인정보 접근 권한의 최소화</li><li>개인정보 취급자에 대한 관리</li><li>안전한 통신환경(HTTPS) 적용</li><li>개인정보의 안전한 보관 및 파기</li></ul>
+      </details>
+      <details>
+        <summary><span class="pv-no">10</span>자동 수집 장치</summary>
+        <p>현재 별도의 광고 픽셀이나 방문자 추적 쿠키를 사용하지 않습니다.<br>다만 홈페이지 운영 또는 광고 서비스 이용 과정에서 쿠키 등 자동 수집 기술이 사용되는 경우 해당 내용을 본 처리방침에 반영합니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">11</span>개인정보 보호책임자 및 문의</summary>
+        <p>개인정보 보호책임자: 김인선<br>소속: (주)인카금융서비스 비엡시다이렉트지점<br>이메일: <a class="footer-link" href="mailto:raem@daum.net">raem@daum.net</a><br>문의: 카카오톡 채널/오픈채팅<br>개인정보와 관련한 문의 및 권리행사 요청은 위 연락처로 접수할 수 있습니다.</p>
+      </details>
+      <details>
+        <summary><span class="pv-no">12</span>권익침해 구제방법</summary>
+        <p>개인정보 침해에 대한 상담 및 분쟁조정이 필요한 경우 다음 기관에 문의할 수 있습니다.</p>
+        <ul><li>개인정보침해신고센터: 국번없이 118</li><li>개인정보분쟁조정위원회: 1833-6972</li><li>경찰청: 국번없이 182</li></ul>
+      </details>
+      <details>
+        <summary><span class="pv-no">13</span>개인정보 처리방침의 변경</summary>
+        <p>본 처리방침은 2026년 9월 27일부터 시행합니다.<br>내용이 변경되는 경우 홈페이지를 통해 안내합니다.</p>
+      </details>
+    </div>
+
+    <p class="pv-foot"><b>사업자 정보</b><br>(주)인카금융서비스 비엡시다이렉트지점<br>서울특별시 강남구 테헤란로 323, 휘닉스오피스텔 603호<br>시행일 2026년 9월 27일</p>
+  </div>
+</dialog>
+
+<div class="mcta">
+  <a class="kakao-fab" href="https://open.kakao.com/o/saEHqCPi" target="_blank" rel="noopener" aria-label="카카오톡 상담">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.86 5.18 4.66 6.58-.2.75-.73 2.7-.84 3.12-.13.52.19.51.4.37.16-.11 2.6-1.77 3.66-2.5.68.1 1.38.15 2.12.15 5.52 0 10-3.48 10-7.72S17.52 3 12 3z"/></svg>
+  </a>
+  <a class="btn btn-primary" href="#apply" data-open-apply data-cta="mobile-bar">내 보험 무료진단 신청</a>
+</div>
+
+<script>
+/* ────────────────────────────────────────────────
+   신청 데이터 전송 설정
+   FORM_ENDPOINT 에 Google Apps Script 웹앱 URL(또는 Formspree 등)을 넣으면
+   신청 내용이 스프레드시트/DB로 자동 축적됩니다. 비어 있으면 화면 안내만 표시합니다.
+   ──────────────────────────────────────────────── */
+const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg8pcHKdgVFZc_x6CZ-qUrz7sHtgkiFdWRFyYDIg4qNogQpocvy8kg/exec";
+
+(function(){
+  const dlg = document.getElementById('applyDialog');
+  const openDlg = (e)=>{
+    if(e) e.preventDefault();
+    if(typeof dlg.showModal === 'function'){ if(!dlg.open) dlg.showModal(); }
+    else { dlg.setAttribute('open',''); }
+    document.body.classList.add('dlg-lock');
+    const first = dlg.querySelector('#name'); if(first) setTimeout(()=>first.focus({preventScroll:true}), 60);
+  };
+  const closeDlg = ()=>{
+    if(dlg.open){ if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); }
+    document.body.classList.remove('dlg-lock');
+  };
+  document.querySelectorAll('[data-open-apply]').forEach(b=>b.addEventListener('click', openDlg));
+  dlg.addEventListener('click', e=>{ if(e.target === dlg || e.target.closest('[data-close]')) closeDlg(); });
+  dlg.addEventListener('close', ()=>document.body.classList.remove('dlg-lock'));
+
+  const pvDlg = document.getElementById('privacyDialog');
+  const openPv = (e)=>{
+    if(e) e.preventDefault();
+    if(typeof pvDlg.showModal === 'function'){ if(!pvDlg.open) pvDlg.showModal(); }
+    else { pvDlg.setAttribute('open',''); }
+    document.body.classList.add('dlg-lock');
+  };
+  const closePv = ()=>{
+    if(pvDlg.open){ if(pvDlg.close) pvDlg.close(); else pvDlg.removeAttribute('open'); }
+    document.body.classList.remove('dlg-lock');
+  };
+  document.querySelectorAll('[data-open-privacy]').forEach(b=>b.addEventListener('click', openPv));
+  pvDlg.addEventListener('click', e=>{ if(e.target === pvDlg || e.target.closest('[data-close]')) closePv(); });
+  pvDlg.addEventListener('close', ()=>document.body.classList.remove('dlg-lock'));
+
+  const form = document.getElementById('applyForm');
+  const err = document.getElementById('err');
+  const phone = document.getElementById('phone');
+
+  // 유입 경로(광고·검색) 추적: ?utm_source=naver&utm_campaign=... 형태
+  const params = new URLSearchParams(location.search);
+  const utm = {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(k=>{ if(params.get(k)) utm[k]=params.get(k); });
+
+  const birth = document.getElementById('birth');
+  birth.addEventListener('input', ()=>{
+    const d = birth.value.replace(/\D/g,'').slice(0,8);
+    birth.value = d.length<5 ? d : d.length<7 ? d.slice(0,4)+'.'+d.slice(4) : d.slice(0,4)+'.'+d.slice(4,6)+'.'+d.slice(6);
+  });
+  const etc = document.getElementById('topicEtc'), etcText = document.getElementById('topicEtcText');
+  etc.addEventListener('change', ()=>{ etcText.hidden = !etc.checked; if(etc.checked) etcText.focus(); });
+
+  phone.addEventListener('input', ()=>{
+    const d = phone.value.replace(/\D/g,'').slice(0,11);
+    phone.value = d.length<4 ? d : d.length<8 ? d.slice(0,3)+'-'+d.slice(3) : d.slice(0,3)+'-'+d.slice(3,d.length-4)+'-'+d.slice(-4);
+  });
+
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    err.textContent = '';
+    const name = form.name.value.trim();
+    const tel = phone.value.replace(/\D/g,'');
+    if(!name){ err.textContent='이름을 입력해 주세요.'; form.name.focus(); return; }
+    if(!/^01\d{8,9}$/.test(tel)){ err.textContent='연락처를 010-0000-0000 형식으로 입력해 주세요.'; phone.focus(); return; }
+    const bd = birth.value.replace(/\D/g,'');
+    const by = +bd.slice(0,4), bm = +bd.slice(4,6), bday = +bd.slice(6,8);
+    const bdt = new Date(by, bm-1, bday);
+    if(bd.length!==8 || by<1920 || bdt > new Date() || bdt.getMonth()!==bm-1 || bdt.getDate()!==bday){ err.textContent='생년월일을 1980.01.01 형식으로 입력해 주세요.'; birth.focus(); return; }
+    if(etc.checked && !etcText.value.trim()){ err.textContent='기타를 선택하셨다면 진단받고 싶은 내용을 적어 주세요.'; etcText.focus(); return; }
+    if(!form.agreePrivacy.checked){ err.textContent='진단 신청을 위해 개인정보 수집·이용 동의가 필요합니다.'; form.agreePrivacy.focus(); return; }
+
+    const now = new Date();
+    const ref = 'BD-' + String(now.getFullYear()).slice(2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(Math.floor(Math.random()*9000)+1000);
+    const data = {
+      ref, submittedAt: now.toISOString(), name, phone: phone.value,
+      birth: birth.value, premium: form.premium.value || '모름',
+      topics: [...form.querySelectorAll('input[name=topic]:checked')].map(i=>i.value==='기타' ? '기타('+etcText.value.trim()+')' : i.value).join(', '),
+      method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(),
+      ...utm, referrer: document.referrer || ''
+    };
+
+    const btn = form.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = '신청 접수 중…';
+    if(FORM_ENDPOINT){
+      try{
+        await fetch(FORM_ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data)});
+      }catch(_){
+        btn.disabled = false; btn.innerHTML = '내 보험 무료진단 신청 <span class="arr">→</span>';
+        err.textContent = '전송 중 문제가 생겼습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.';
+        return;
+      }
+    }
+
+    const box = document.getElementById('formbox');
+    form.remove();
+    const done = document.createElement('div');
+    done.className = 'done';
+    done.innerHTML = '<p class="eyebrow">Received</p><h3></h3><p>영업일 기준 1일 이내에 담당 컨설턴트가 <span data-t="phone"></span>(으)로 연락드리겠습니다. 가지고 계신 보험증권이나 보험사 앱 화면을 미리 준비해 주시면 진단이 더 빨라집니다.</p><div class="ref"><span>접수번호</span><b></b></div><button class="btn btn-ghost" type="button" data-close style="margin-top:24px;width:100%">확인</button>';
+    done.querySelector('h3').textContent = name + '님, 진단 신청이 접수되었습니다.';
+    done.querySelector('[data-t=phone]').textContent = data.phone;
+    done.querySelector('.ref b').textContent = ref;
+    box.appendChild(done);
+    dlg.scrollTop = 0;
+  });
+})();
+</script>
+</body>
+</html>
