@@ -218,6 +218,9 @@ textarea{resize:vertical;min-height:76px}
 input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:var(--bronze-soft)}
 input::placeholder,textarea::placeholder{color:#6F675D}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips.gender{flex-wrap:nowrap;padding-top:2px}
+.chips.gender label{flex:1}
+.chips.gender span{display:block;text-align:center}
 #topicEtcText{margin-top:6px}
 .time-range{display:flex;align-items:center;gap:8px}
 .time-range select{flex:1;min-width:0}
@@ -573,12 +576,18 @@ footer .brand b{color:var(--band-text);font-size:32px}
           </div>
           <div class="row">
             <div class="f"><label for="birth">생년월일 <i>*</i></label><input type="text" id="birth" name="birth" autocomplete="bday" inputmode="numeric" placeholder="1980.01.01" maxlength="10" required></div>
-            <div class="f"><label for="premium">현재 월 보험료 (가구 합계)</label>
-              <select id="premium" name="premium">
-                <option value="">잘 모르겠어요</option>
-                <option>10만 원 미만</option><option>10~30만 원</option><option>30~50만 원</option><option>50~100만 원</option><option>100만 원 이상</option>
-              </select>
+            <div class="f"><span class="lbl" id="genderLbl">성별 <i>*</i></span>
+              <div class="chips gender" role="radiogroup" aria-labelledby="genderLbl">
+                <label><input type="radio" name="gender" value="남성"><span>남성</span></label>
+                <label><input type="radio" name="gender" value="여성"><span>여성</span></label>
+              </div>
             </div>
+          </div>
+          <div class="f"><label for="premium">현재 월 보험료 (가구 합계)</label>
+            <select id="premium" name="premium">
+              <option value="">잘 모르겠어요</option>
+              <option>10만 원 미만</option><option>10~30만 원</option><option>30~50만 원</option><option>50~100만 원</option><option>100만 원 이상</option>
+            </select>
           </div>
           <div class="f">
             <span class="lbl" id="topicLbl">진단받고 싶은 부분 (복수 선택)</span>
@@ -773,6 +782,8 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     const by = +bd.slice(0,4), bm = +bd.slice(4,6), bday = +bd.slice(6,8);
     const bdt = new Date(by, bm-1, bday);
     if(bd.length!==8 || by<1920 || bdt > new Date() || bdt.getMonth()!==bm-1 || bdt.getDate()!==bday){ err.textContent='생년월일을 1980.01.01 형식으로 입력해 주세요.'; birth.focus(); return; }
+    const gender = form.querySelector('input[name=gender]:checked');
+    if(!gender){ err.textContent='성별을 선택해 주세요.'; form.querySelector('input[name=gender]').focus(); return; }
     if(etc.checked && !etcText.value.trim()){ err.textContent='기타를 선택하셨다면 진단받고 싶은 내용을 적어 주세요.'; etcText.focus(); return; }
     if(!form.agreePrivacy.checked){ err.textContent='진단 신청을 위해 개인정보 수집·이용 동의가 필요합니다.'; form.agreePrivacy.focus(); return; }
 
@@ -780,7 +791,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     const ref = 'BD-' + String(now.getFullYear()).slice(2) + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(Math.floor(Math.random()*9000)+1000);
     const data = {
       ref, submittedAt: now.toISOString(), name, phone: phone.value,
-      birth: birth.value, premium: form.premium.value || '모름',
+      birth: birth.value, gender: gender.value, premium: form.premium.value || '모름',
       topics: [...form.querySelectorAll('input[name=topic]:checked')].map(i=>i.value==='기타' ? '기타('+etcText.value.trim()+')' : i.value).join(', '),
       method: form.method.value, time: form.timeFrom.value + ' ~ ' + form.timeTo.value, memo: form.memo.value.trim(), source: form.source.value,
       ...utm, referrer: document.referrer || ''
