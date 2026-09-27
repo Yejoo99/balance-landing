@@ -145,7 +145,7 @@ section{padding-block:104px}
 .c-visual{position:relative;margin:0;padding-top:36px;display:flex;justify-content:center;align-items:flex-end}
 .c-visual::before{content:"";position:absolute;left:8%;right:8%;top:18%;bottom:0;border:1px solid var(--band-rule);border-bottom:0;background:linear-gradient(180deg,var(--band-2),transparent 85%)}
 .c-visual::after{content:"";position:absolute;left:50%;top:14%;width:90%;aspect-ratio:1;transform:translateX(-50%);background:radial-gradient(circle,rgba(184,146,95,.22),transparent 62%);pointer-events:none}
-.c-visual img{position:relative;z-index:1;display:block;width:min(100%,380px);height:auto;filter:saturate(.85) contrast(1.03);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 99%);mask-image:linear-gradient(180deg,#000 72%,transparent 99%)}
+.c-visual img{position:relative;z-index:1;display:block;width:min(100%,380px);height:auto;filter:saturate(.85) contrast(1.03);-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 99%);mask-image:linear-gradient(180deg,#000 72%,transparent 99%);-webkit-user-drag:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .c-visual figcaption{position:absolute;z-index:2;left:8%;bottom:3%;padding:14px 16px;font-family:var(--latin);font-size:19px;letter-spacing:.2em;color:var(--band-sub)}
 @media (max-width:900px){
   .consultant{grid-template-columns:1fr;gap:0}
@@ -243,6 +243,7 @@ input::placeholder,textarea::placeholder{color:#6F675D}
 .consent-body p:last-child{margin-bottom:0}
 .consent-body b{color:#A79E92;font-weight:600}
 .err{color:#E09A86;font-size:13px;min-height:1em}
+.field-note{font-size:12px;line-height:1.6;color:#8A8277}
 .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
 form .btn{width:100%;padding:19px}
 .done{text-align:left;padding:8px 0}
@@ -418,7 +419,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
   <section id="consultant" class="consultant-sec">
     <div class="wrap consultant">
       <figure class="c-visual">
-        <img src="profile.webp?v=7" alt="김인선 대표 컨설턴트" width="608" height="824" loading="lazy">
+        <img src="profile.webp?v=7" alt="김인선 대표 컨설턴트" width="608" height="824" loading="lazy" draggable="false" oncontextmenu="return false">
         <figcaption>KIM IN SUN</figcaption>
       </figure>
       <div class="c-text">
@@ -579,7 +580,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
       ※ 본 페이지의 보험상품 및 보장내용은 상담 시 확인되는 상품설명서와 약관을 기준으로 합니다.
     </div>
     <p class="foot-links"><a class="footer-link" href="#" data-open-privacy>개인정보처리방침</a></p>
-    <p>© BALANCE Private Insurance Diagnosis Center</p>
+    <p>© 2026 김인선 · 밸런스 프라이빗 보험진단설계<br>본 사이트의 문구·이미지·디자인의 무단 복제 및 도용을 금합니다.</p>
   </div>
 </footer>
 
@@ -645,7 +646,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
               <option>네이버 검색</option><option>네이버 블로그</option><option>인스타그램</option><option>스레드</option><option>페이스북</option><option>유튜브</option><option>카카오톡</option><option>지인 소개</option><option>기존 고객</option><option>기타</option>
             </select>
           </div>
-          <div class="f"><label for="memo">구체적인 상담 희망내용</label><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요."></textarea></div>
+          <div class="f"><label for="memo">구체적인 상담 희망내용</label><textarea id="memo" name="memo" placeholder="예) 보험이 5개 정도인데 뭐가 뭔지 모르겠어요." aria-describedby="memoNote"></textarea><p class="field-note" id="memoNote">※ 질병명, 치료내용, 수술·복약 등 건강정보는 입력하지 말아 주세요. 상담 시 별도로 안내드리겠습니다.</p></div>
 
           <div class="hp" aria-hidden="true"><label for="website">웹사이트</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="consent">
