@@ -19,6 +19,10 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#23211F">
+<script>
+/* 모션: 움직임 줄이기 설정이 아닌 경우에만 적용. 스크립트가 실패하면 4초 뒤 모든 내용을 그대로 표시 */
+(function(d){try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver'in window))return;d.classList.add('motion');setTimeout(function(){if(!window.__motionOK)d.classList.remove('motion')},4000)}catch(e){}})(document.documentElement);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Alex+Brush&display=swap">
@@ -349,6 +353,26 @@ footer .brand b{color:var(--band-text);font-size:32px}
   .mcta .btn{flex:1;padding:15px}
   .top .btn{display:none}
 }
+
+/* ---------- motion ---------- */
+.motion :is(.hero .eyebrow,.hero h1,.hero .lead,.hero .ctas,.hero .affil,.hero .facts,.rows li,.sec-head,.who li,.c-text>*,.steps li,.d-item,.d-closing,.faq details,.apply-intro>*:not(.flow-line),.apply-cta){opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .9s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.motion .report-wrap{opacity:0;transform:translateX(36px);transition:opacity 1s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform 1s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.motion :is(.ratio,.report-note,.d-note,.flow-line span,.c-visual){opacity:0;transition:opacity 1.1s ease var(--d,0s),transform 1.4s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.motion .c-visual{transform:scale(.97)}
+.motion .is-in{opacity:1!important;transform:none!important}
+.motion .bar i{transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.2,.7,.2,1) calc(var(--d,0s) + .3s)}
+.motion .ratio.is-in .bar i{transform:none}
+.motion .steps::before{transform:scaleX(0);transform-origin:left;transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.motion .steps.is-in::before{transform:none}
+@media (max-width:1000px){.motion .steps::before{transform:scaleY(0);transform-origin:top}.motion .steps.is-in::before{transform:none}}
+.motion .hero h1 em{background:linear-gradient(rgba(184,146,95,.6),rgba(184,146,95,.6)) 0 96%/0 1px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size 1.2s cubic-bezier(.2,.7,.2,1) 1.1s}
+.motion .hero h1.is-in em{background-size:100% 1px}
+.top{transition:box-shadow .35s ease}
+.top.scrolled{box-shadow:0 12px 30px -18px rgba(0,0,0,.75)}
+.btn .arr{display:inline-block;transition:transform .25s ease}
+.btn:hover .arr{transform:translateX(4px)}
+.d-item{transition:background .35s ease}
+.d-item:hover{background:var(--bg)}
 </style>
 </head>
 <body>
@@ -894,6 +918,81 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     box.appendChild(done);
     dlg.scrollTop = 0;
   });
+})();
+</script>
+<script>
+/* 모션: 스크롤하면 요소가 차례로 나타나고 숫자가 올라갑니다 */
+(function(){
+  var root = document.documentElement;
+  if(!root.classList.contains('motion')) return;
+  window.__motionOK = true;
+  var groups = [
+    ['.hero .eyebrow',0,0], ['.hero h1',.08,0], ['.hero .lead',.2,0], ['.hero .ctas',.3,0], ['.hero .affil',.4,0], ['.hero .facts',.48,0],
+    ['.report-wrap',.3,0], ['.rows li',.7,.08], ['.ratio',1.1,0], ['.report-note',1.3,0],
+    ['.sec-head',0,0], ['.who li',0,.07], ['.c-visual',0,0], ['.c-text > *',.1,.08],
+    ['.steps',0,0], ['.steps li',.1,.1], ['.d-item',0,.08], ['.d-note',.2,0], ['.d-closing',0,0],
+    ['.faq details',0,.05], ['.apply-intro > *',0,.08], ['.flow-line span',.3,.18], ['.apply-cta',.2,0]
+  ];
+  var pending = [];
+  function reveal(el){
+    if(el.classList.contains('is-in')) return;
+    el.classList.add('is-in');
+    io.unobserve(el);
+    if(el.__onIn) el.__onIn();
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) reveal(e.target); });
+  }, {rootMargin:'0px 0px -8% 0px', threshold:0.01});
+  groups.forEach(function(g){
+    document.querySelectorAll(g[0]).forEach(function(el){
+      var i = 0;
+      if(g[2]){ var s = el.parentNode.children; for(var k=0; k<s.length && s[k]!==el; k++){ if(s[k].matches(g[0])) i++; } }
+      el.style.setProperty('--d', (g[1] + Math.min(i,8)*g[2]).toFixed(2) + 's');
+      io.observe(el);
+      pending.push(el);
+    });
+  });
+  // 보조 확인: 일부 앱 내 브라우저에서 감지가 늦을 때 화면 안의 요소를 직접 표시
+  function sweep(){
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    if(!h) return;
+    pending = pending.filter(function(el){
+      if(el.classList.contains('is-in')) return false;
+      var r = el.getBoundingClientRect();
+      if(r.top < h * 0.92 && r.bottom > 0){ reveal(el); return false; }
+      return true;
+    });
+  }
+  var sweepT = null;
+  window.addEventListener('scroll', function(){ if(!sweepT) sweepT = setTimeout(function(){ sweepT = null; sweep(); }, 120); }, {passive:true});
+  window.addEventListener('resize', sweep);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) sweep(); });
+  setTimeout(sweep, 60); setTimeout(sweep, 600);
+  // 숫자 카운트업 (최종 표시는 원래 문구 그대로)
+  document.querySelectorAll('.hero .facts strong, .bignum strong').forEach(function(s){
+    var m = s.textContent.match(/^([\d,]+)(.*)$/); if(!m) return;
+    var target = +m[1].replace(/,/g,''); if(!target) return;
+    var original = s.textContent, suffix = m[2];
+    var host = s.closest('.facts') || s.closest('.bignum'); if(!host) return;
+    var prev = host.__onIn;
+    host.__onIn = function(){
+      if(prev) prev();
+      var delay = parseFloat(getComputedStyle(host).getPropertyValue('--d')) * 1000 || 0;
+      s.textContent = '0' + suffix;
+      setTimeout(function(){
+        var t0 = Date.now(), dur = 1600;
+        function step(){
+          var p = Math.min((Date.now() - t0) / dur, 1), v = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          s.textContent = (target >= 1000 ? v.toLocaleString('en-US') : v) + suffix;
+          if(p < 1) setTimeout(step, 30); else s.textContent = original;
+        }
+        step();
+      }, delay + 150);
+    };
+  });
+  // 스크롤 시 상단 바 그림자
+  var top = document.querySelector('.top');
+  if(top){ var onScroll = function(){ top.classList.toggle('scrolled', window.scrollY > 8); }; window.addEventListener('scroll', onScroll, {passive:true}); onScroll(); }
 })();
 </script>
 </body>
