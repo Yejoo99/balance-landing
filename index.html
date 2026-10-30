@@ -202,6 +202,15 @@ blockquote .motto{display:block;margin-bottom:14px;font-size:1.12em;font-weight:
 .d-item h3{font-size:20px;margin-bottom:10px}
 .d-item p{color:var(--sub);font-size:15px}
 @media (max-width:700px){.d-grid{grid-template-columns:1fr}.d-item{padding:30px 26px}}
+.c-rows{display:grid;gap:64px}
+.c-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.c-row.rev .c-img{order:2}
+.c-img{margin:0;overflow:hidden;background:var(--rule)}
+.c-img img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.c-row:hover .c-img img{transform:scale(1.03)}
+.c-body h3{font-size:22px;margin-bottom:12px}
+.c-body p{color:var(--sub);font-size:15.5px;max-width:30em}
+@media (max-width:700px){.c-rows{gap:48px}.c-row{grid-template-columns:1fr;gap:20px}.c-row.rev .c-img{order:0}}
 .d-note{margin-top:16px;font-size:13px;line-height:1.7;color:var(--sub)}
 .d-closing{margin-top:48px;padding-top:36px;border-top:1px solid var(--rule);text-align:center}
 .d-closing p{font-size:19px;line-height:1.85;color:var(--text);max-width:36em;margin:0 auto}
@@ -365,7 +374,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
 }
 
 /* ---------- motion ---------- */
-.motion :is(.hero .eyebrow,.hero h1,.hero .lead,.hero .ctas,.hero .affil,.hero .facts,.rows li,.sec-head,.who li,.c-text>*,.steps li,.d-item,.d-closing,.faq details,.apply-intro>*:not(.flow-line),.apply-cta){opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .9s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.motion :is(.hero .eyebrow,.hero h1,.hero .lead,.hero .ctas,.hero .affil,.hero .facts,.rows li,.sec-head,.who li,.c-text>*,.steps li,.d-item,.c-row,.d-closing,.faq details,.apply-intro>*:not(.flow-line),.apply-cta){opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .9s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
 .motion .report-wrap{opacity:0;transform:translateX(36px);transition:opacity 1s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform 1s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
 .motion :is(.ratio,.report-note,.d-note,.flow-line span,.c-visual){opacity:0;transition:opacity 1.1s ease var(--d,0s),transform 1.4s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
 .motion .c-visual{transform:scale(.97)}
@@ -549,26 +558,22 @@ footer .brand b{color:var(--band-text);font-size:32px}
           <p>보험설계는 모두 같을 수 없습니다.<br>보험료보다 중요한 건, 필요한 순간의 보장입니다.<br>가족력과 질병 위험을 반영해, 합리적인 보험료로 꼭 필요한 보장을 맞춤 설계합니다.</p>
         </div>
       </div>
-      <div class="d-grid">
-        <div class="d-item">
-          <span class="d-tag">i. Life Cycle</span>
-          <h3>생애주기별 보장설계</h3>
-          <p>결혼·출산·이직·은퇴 등 삶의 변화에 맞춰, 보험료 부담과 필요한 보장의 균형을 고려해 설계하고 보험금 청구 절차까지 꼼꼼히 안내합니다.</p>
+      <div class="c-rows">
+        <div class="c-row">
+          <figure class="c-img"><img src="design-lifecycle.webp" alt="아이가 웃으며 달려오고 부모가 두 팔을 벌려 안아주는 따뜻한 거실 풍경" width="1200" height="750" loading="lazy" decoding="async"></figure>
+          <div class="c-body"><span class="d-tag">i. Life Cycle</span><h3>생애주기별 보장설계</h3><p>결혼·출산·이직·은퇴 등 삶의 변화에 맞춰, 보험료 부담과 필요한 보장의 균형을 고려해 설계하고 보험금 청구 절차까지 꼼꼼히 안내합니다.</p></div>
         </div>
-        <div class="d-item">
-          <span class="d-tag">ii. Coverage Gap</span>
-          <h3>부족보장 설계</h3>
-          <p>질병·의료 분야에 대한 풍부한 경험과 전문적 이해를 바탕으로 보장의 중복과 공백을 점검하고, 여러 보험사의 상품을 비교해 맞춤 설계합니다.</p>
+        <div class="c-row rev">
+          <figure class="c-img"><img src="design-coverage.webp" alt="컨설턴트가 서류를 짚으며 고객과 함께 보장 내용을 검토하는 모습" width="1200" height="750" loading="lazy" decoding="async"></figure>
+          <div class="c-body"><span class="d-tag">ii. Coverage Gap</span><h3>부족보장 설계</h3><p>질병·의료 분야에 대한 풍부한 경험과 전문적 이해를 바탕으로 보장의 중복과 공백을 점검하고, 여러 보험사의 상품을 비교해 맞춤 설계합니다.</p></div>
         </div>
-        <div class="d-item">
-          <span class="d-tag">iii. Estate Planning</span>
-          <h3>상속·증여 대비 보장 상담</h3>
-          <p>상속·증여 재원 마련을 위한 보험 활용을 상담하며, 세무·법률 검토가 필요한 경우 전문가와 연계합니다.</p>
+        <div class="c-row">
+          <figure class="c-img"><img src="design-estate.webp" alt="가죽 폴더와 찻잔이 놓인 조용한 상담실 테이블" width="1200" height="750" loading="lazy" decoding="async"></figure>
+          <div class="c-body"><span class="d-tag">iii. Estate Planning</span><h3>상속·증여 대비 보장 상담</h3><p>상속·증여 재원 마련을 위한 보험 활용을 상담하며, 세무·법률 검토가 필요한 경우 전문가와 연계합니다.</p></div>
         </div>
-        <div class="d-item">
-          <span class="d-tag">iv. Healthcare Guide</span>
-          <h3>진료과·의료기관 정보 안내</h3>
-          <p>건강 고민에 맞는 진료과와 병원 선택에 참고할 수 있는 정보를 안내합니다.</p>
+        <div class="c-row rev">
+          <figure class="c-img"><img src="design-healthcare.webp" alt="햇살이 드는 밝고 깨끗한 병원 복도" width="1200" height="750" loading="lazy" decoding="async"></figure>
+          <div class="c-body"><span class="d-tag">iv. Healthcare Guide</span><h3>진료과·의료기관 정보 안내</h3><p>건강 고민에 맞는 진료과와 병원 선택에 참고할 수 있는 정보를 안내합니다.</p></div>
         </div>
       </div>
       <p class="d-note">※ 해당 보험진단은 가입한 보험의 보장내용을 객관적으로 확인·분석하는 상담 서비스이며, 보험가입 여부는 고객의 자율적인 판단에 따라 결정됩니다.</p>
@@ -996,7 +1001,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     ['.hero .eyebrow',0,0], ['.hero h1',.08,0], ['.hero .lead',.2,0], ['.hero .ctas',.3,0], ['.hero .affil',.4,0], ['.hero .facts',.48,0],
     ['.report-wrap',.3,0], ['.rows li',.7,.08], ['.ratio',1.1,0], ['.report-note',1.3,0],
     ['.sec-head',0,0], ['.who li',0,.07], ['.c-visual',0,0], ['.c-text > *',.1,.08],
-    ['.steps',0,0], ['.steps li',.1,.1], ['.d-item',0,.08], ['.d-note',.2,0], ['.d-closing',0,0],
+    ['.steps',0,0], ['.steps li',.1,.1], ['.d-item',0,.08], ['.c-row',0,0], ['.d-note',.2,0], ['.d-closing',0,0],
     ['.faq details',0,.05], ['.apply-intro > *',0,.08], ['.flow-line span',.3,.18], ['.apply-cta',.2,0]
   ];
   var pending = [];
