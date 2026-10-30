@@ -206,8 +206,7 @@ blockquote .motto{display:block;margin-bottom:14px;font-size:1.12em;font-weight:
 .c-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
 .c-row.rev .c-img{order:2}
 .c-img{margin:0;overflow:hidden;background:var(--rule)}
-.c-img img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
-.c-row:hover .c-img img{transform:scale(1.03)}
+.c-img img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
 .c-body h3{font-size:22px;margin-bottom:12px}
 .c-body p{color:var(--sub);font-size:15.5px;max-width:30em}
 @media (max-width:700px){.c-rows{gap:48px}.c-row{grid-template-columns:1fr;gap:20px}.c-row.rev .c-img{order:0}}
@@ -375,6 +374,7 @@ footer .brand b{color:var(--band-text);font-size:32px}
 
 /* ---------- motion ---------- */
 .motion :is(.hero .eyebrow,.hero h1,.hero .lead,.hero .ctas,.hero .affil,.hero .facts,.rows li,.sec-head,.who li,.c-text>*,.steps li,.d-item,.c-row,.d-closing,.faq details,.apply-intro>*:not(.flow-line),.apply-cta){opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .9s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.motion .c-rows .c-row{transform:translateY(48px);transition-duration:1.2s}
 .motion .report-wrap{opacity:0;transform:translateX(36px);transition:opacity 1s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform 1s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
 .motion :is(.ratio,.report-note,.d-note,.flow-line span,.c-visual){opacity:0;transition:opacity 1.1s ease var(--d,0s),transform 1.4s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
 .motion .c-visual{transform:scale(.97)}
@@ -1001,7 +1001,7 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
     ['.hero .eyebrow',0,0], ['.hero h1',.08,0], ['.hero .lead',.2,0], ['.hero .ctas',.3,0], ['.hero .affil',.4,0], ['.hero .facts',.48,0],
     ['.report-wrap',.3,0], ['.rows li',.7,.08], ['.ratio',1.1,0], ['.report-note',1.3,0],
     ['.sec-head',0,0], ['.who li',0,.07], ['.c-visual',0,0], ['.c-text > *',.1,.08],
-    ['.steps',0,0], ['.steps li',.1,.1], ['.d-item',0,.08], ['.c-row',0,0], ['.d-note',.2,0], ['.d-closing',0,0],
+    ['.steps',0,0], ['.steps li',.1,.1], ['.d-item',0,.08], ['.d-note',.2,0], ['.d-closing',0,0],
     ['.faq details',0,.05], ['.apply-intro > *',0,.08], ['.flow-line span',.3,.18], ['.apply-cta',.2,0]
   ];
   var pending = [];
@@ -1023,6 +1023,22 @@ const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbw6sjzjf1mG0BgsNg
       pending.push(el);
     });
   });
+  // 설계 섹션: 사진·글이 한 줄씩, 화면 안으로 충분히 들어왔을 때 함께 나타남
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.c-row'));
+  var rowIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); rowIO.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -20% 0px', threshold:0});
+  rows.forEach(function(el){ rowIO.observe(el); });
+  function sweepRows(){
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    rows = rows.filter(function(el){
+      if(el.classList.contains('is-in')) return false;
+      if(el.getBoundingClientRect().top < h * 0.8){ el.classList.add('is-in'); rowIO.unobserve(el); return false; }
+      return true;
+    });
+  }
+  window.addEventListener('scroll', sweepRows, {passive:true});
+
   // 보조 확인: 일부 앱 내 브라우저에서 감지가 늦을 때 화면 안의 요소를 직접 표시
   function sweep(){
     var h = window.innerHeight || document.documentElement.clientHeight;
